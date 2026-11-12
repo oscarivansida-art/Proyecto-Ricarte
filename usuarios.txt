@@ -1,0 +1,21 @@
+Admin:
+
+email: admin@ejemplo.com
+password: admin123
+Encargado:
+
+email: encargado@ejemplo.com
+password: encargado123
+
+
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+npm install
+
+npm start
+
+
+
+npm.cmd install
+npm.cmd start

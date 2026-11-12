@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Super Admin</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/modo-oscuro.css">
+    <script src="../js/modo-oscuro.js"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="h-full text-slate-700 font-sans antialiased bg-slate-100">
+
+    <div class="flex min-h-screen">
+        
+        <!-- SIDEBAR DE ADMINISTRACIÓN -->
+        <aside class="w-64 bg-white border-r border-slate-200 flex flex-col justify-between p-4">
+            <div>
+                <!-- Brand -->
+                <div class="flex items-center gap-3 text-brand-600 font-bold text-lg pb-6 border-b border-slate-200">
+                    <i class="fa-solid fa-shield-halved text-xl"></i>
+                    <span>AdminPanel</span>
+                </div>
+
+                <!-- Menú de Navegación -->
+                <nav class="flex flex-col gap-1.5 mt-6">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 bg-brand-50 text-brand-600 font-medium text-sm rounded-xl border border-brand-100">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="usuarios.html" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-brand-700 hover:bg-brand-50 font-medium text-sm rounded-xl transition-all">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Usuarios y Roles</span>
+                    </a>
+                    <a href="inventario.html" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-brand-700 hover:bg-brand-50 font-medium text-sm rounded-xl transition-all">
+                        <i class="fa-solid fa-box-archive"></i>
+                        <span>Inventario General</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Botón Salir -->
+            <button onclick="logout()" class="w-full py-2.5 px-3 bg-slate-50 hover:bg-red-50 hover:text-red-600 border border-slate-200 hover:border-red-200 text-slate-600 text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="flex-grow flex flex-col min-w-0">
+            
+            <!-- TOPBAR -->
+            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6">
+                <!-- Buscador -->
+                <div class="relative w-72">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 pointer-events-none">
+                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                    </span>
+                    <input type="text" placeholder="Buscar registros, usuarios..." class="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all">
+                </div>
+
+                <!-- Perfil Admin -->
+                <div class="flex items-center gap-3 text-right">
+                    <div>
+                        <span id="admin-name" class="block text-sm font-semibold text-slate-800">Cargando...</span>
+                        <span class="block text-[11px] text-brand-600 font-medium">Super Administrador</span>
+                    </div>
+                    <div id="admin-avatar" class="w-9 h-9 bg-gradient-to-tr from-brand-600 to-brand-500 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md">
+                        A
+                    </div>
+                </div>
+            </header>
+
+            <!-- ÁREA DE CONTENIDO -->
+            <div class="p-6 sm:p-8 space-y-6 overflow-y-auto">
+                
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800">Resumen General del Sistema</h1>
+                        <p class="text-xs text-slate-500 mt-0.5">Control global de cuentas, permisos y actividad operativa</p>
+                    </div>
+                    <a href="usuarios.html" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-lg shadow-brand-600/20 transition-all">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span>Nuevo Usuario</span>
+                    </a>
+                </div>
+
+                <!-- TARJETAS DE MÉTRICAS -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Usuarios Totales</p>
+                            <h3 class="text-xl font-bold text-slate-800 mt-0.5">1,248</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Encargados Activos</p>
+                            <h3 class="text-xl font-bold text-slate-800 mt-0.5">14</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-shield-virus"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Alertas del Sistema</p>
+                            <h3 class="text-xl font-bold text-slate-800 mt-0.5">0 Pendientes</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLA DE GESTIÓN DE USUARIOS -->
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+                    <div class="p-4 border-b border-slate-200 flex justify-between items-center">
+                        <h2 class="text-sm font-semibold text-slate-800">Gestión de Accesos y Roles</h2>
+                        <span class="text-xs text-slate-500">Base de datos sincronizada</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-600">
+                            <thead class="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
+                                <tr>
+                                    <th class="p-3.5">Usuario</th>
+                                    <th class="p-3.5">Correo Electrónico</th>
+                                    <th class="p-3.5">Rol Asignado</th>
+                                    <th class="p-3.5">Estado</th>
+                                    <th class="p-3.5 text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="p-3.5 font-medium text-slate-800 flex items-center gap-2">
+                                        <div class="w-7 h-7 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center font-bold text-[10px]">
+                                            MG
+                                        </div>
+                                        <span>María García</span>
+                                    </td>
+                                    <td class="p-3.5">maria.garcia@ejemplo.com</td>
+                                    <td class="p-3.5"><span class="px-2 py-0.5 bg-brand-50 text-brand-600 border border-brand-100 rounded-md font-semibold text-[10px]">Administrador</span></td>
+                                    <td class="p-3.5 text-emerald-600 font-medium">Activo</td>
+                                    <td class="p-3.5 text-right space-x-1">
+                                        <button class="p-1.5 text-slate-400 hover:text-brand-600 transition-colors"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="p-1.5 text-slate-400 hover:text-red-600 transition-colors"><i class="fa-solid fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="p-3.5 font-medium text-slate-800 flex items-center gap-2">
+                                        <div class="w-7 h-7 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center font-bold text-[10px]">
+                                            JL
+                                        </div>
+                                        <span>Juan López</span>
+                                    </td>
+                                    <td class="p-3.5">juan.lopez@ejemplo.com</td>
+                                    <td class="p-3.5"><span class="px-2 py-0.5 bg-brand-50 text-brand-600 border border-brand-100 rounded-md font-semibold text-[10px]">Encargado</span></td>
+                                    <td class="p-3.5 text-emerald-600 font-medium">Activo</td>
+                                    <td class="p-3.5 text-right space-x-1">
+                                        <button class="p-1.5 text-slate-400 hover:text-brand-600 transition-colors"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="p-1.5 text-slate-400 hover:text-red-600 transition-colors"><i class="fa-solid fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Script de protección y control de vista para Admin -->
+    <script src="../js/admin.js"></script>
+</body>
+</html>

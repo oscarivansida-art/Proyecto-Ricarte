@@ -1,0 +1,194 @@
+.dark {
+    color-scheme: dark;
+}
+
+.dark,
+.dark [class~="bg-slate-100"] {
+    background-color: #0f172a !important;
+}
+
+.dark [class~="bg-white"],
+.dark [class~="bg-white/90"] {
+    background-color: #1e293b !important;
+}
+
+.dark [class~="bg-slate-50"],
+.dark [class~="bg-slate-100"] {
+    background-color: #334155 !important;
+}
+
+.dark [class~="bg-brand-50"] {
+    background-color: #312e4b !important;
+}
+
+.dark [class~="bg-brand-100"] {
+    background-color: #3b3560 !important;
+}
+
+.dark [class~="bg-red-50"] {
+    background-color: #451a24 !important;
+}
+
+.dark [class~="bg-amber-50"] {
+    background-color: #422006 !important;
+}
+
+.dark [class~="bg-amber-100"] {
+    background-color: #713f12 !important;
+}
+
+.dark [class~="bg-amber-500/10"] {
+    background-color: rgb(120 53 15 / 20%) !important;
+}
+
+.dark [class~="bg-emerald-50"] {
+    background-color: #052e1a !important;
+}
+
+.dark [class~="bg-emerald-500/10"] {
+    background-color: rgb(6 78 59 / 30%) !important;
+}
+
+.dark [class~="text-slate-800"],
+.dark [class~="text-slate-700"] {
+    color: #e2e8f0 !important;
+}
+
+.dark [class~="text-slate-600"],
+.dark [class~="text-slate-500"] {
+    color: #cbd5e1 !important;
+}
+
+.dark [class~="text-slate-400"] {
+    color: #94a3b8 !important;
+}
+
+.dark [class~="text-brand-600"],
+.dark [class~="text-brand-700"] {
+    color: #c4b5fd !important;
+}
+
+.dark [class~="text-amber-400"],
+.dark [class~="text-amber-700"] {
+    color: #fcd34d !important;
+}
+
+.dark [class~="text-emerald-600"],
+.dark [class~="text-emerald-700"] {
+    color: #6ee7b7 !important;
+}
+
+.dark [class~="text-red-600"],
+.dark [class~="text-red-700"] {
+    color: #fda4af !important;
+}
+
+.dark [class~="border-slate-100"],
+.dark [class~="border-slate-200"],
+.dark [class~="border-brand-100"] {
+    border-color: #475569 !important;
+}
+
+.dark [class~="border-amber-100"],
+.dark [class~="border-amber-200"] {
+    border-color: #854d0e !important;
+}
+
+.dark [class~="border-emerald-100"] {
+    border-color: #065f46 !important;
+}
+
+.dark [class~="border-red-100"],
+.dark [class~="border-red-200"] {
+    border-color: #881337 !important;
+}
+
+.dark [class~="divide-slate-100"] > :not([hidden]) ~ :not([hidden]) {
+    border-color: #475569 !important;
+}
+
+.dark [class~="hover:bg-brand-50"]:hover {
+    background-color: #312e4b !important;
+}
+
+.dark tr[class~="hover:bg-slate-50"]:hover,
+.dark tr[class~="hover:bg-slate-50"]:hover > td {
+    background-color: transparent !important;
+}
+
+.dark tr[class~="hover:bg-slate-50"]:hover > td {
+    box-shadow:
+        inset 0 1px 0 rgb(167 139 250 / 80%),
+        inset 0 -1px 0 rgb(167 139 250 / 80%);
+}
+
+.dark tr[class~="hover:bg-slate-50"]:hover > td:first-child {
+    box-shadow:
+        inset 1px 0 0 rgb(167 139 250 / 80%),
+        inset 0 1px 0 rgb(167 139 250 / 80%),
+        inset 0 -1px 0 rgb(167 139 250 / 80%);
+}
+
+.dark tr[class~="hover:bg-slate-50"]:hover > td:last-child {
+    box-shadow:
+        inset -1px 0 0 rgb(167 139 250 / 80%),
+        inset 0 1px 0 rgb(167 139 250 / 80%),
+        inset 0 -1px 0 rgb(167 139 250 / 80%);
+}
+
+.dark [class~="hover:text-brand-700"]:hover {
+    color: #ddd6fe !important;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+    color-scheme: dark;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+#theme-toggle {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.75rem;
+    background: #ffffff;
+    color: #334155;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgb(15 23 42 / 15%);
+    cursor: pointer;
+}
+
+#theme-toggle:hover {
+    background: #f1f5f9;
+}
+
+.dark #theme-toggle {
+    border-color: #475569;
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+.dark #theme-toggle:hover {
+    background: #334155;
+}
+
+#theme-toggle:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 3px;
+}

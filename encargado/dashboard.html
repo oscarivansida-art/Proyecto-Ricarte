@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Supervisión - Encargado</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/modo-oscuro.css">
+    <script src="../js/modo-oscuro.js"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="h-full text-slate-700 font-sans antialiased bg-slate-100">
+
+    <div class="flex min-h-screen">
+        
+        <!-- SIDEBAR OPERATIVO -->
+        <aside class="w-64 bg-white border-r border-slate-200 flex flex-col justify-between p-4">
+            <div>
+                <!-- Brand -->
+                <div class="flex items-center gap-3 text-brand-600 font-bold text-lg pb-6 border-b border-slate-200">
+                    <i class="fa-solid fa-clipboard-check text-xl"></i>
+                    <span>Supervisión</span>
+                </div>
+
+                <!-- Menú de Navegación -->
+                <nav class="flex flex-col gap-1.5 mt-6">
+                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 bg-brand-50 text-brand-600 font-medium text-sm rounded-xl border border-brand-100">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Turno & Operaciones</span>
+                    </a>
+                    <a href="inventario.html" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-brand-700 hover:bg-brand-50 font-medium text-sm rounded-xl transition-all">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Inventario / Stock</span>
+                    </a>
+                    <a href="reporte.html" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-brand-700 hover:bg-brand-50 font-medium text-sm rounded-xl transition-all">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <span>Reporte Diario</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Botón Salir -->
+            <button onclick="logout()" class="w-full py-2.5 px-3 bg-slate-50 hover:bg-red-50 hover:text-red-600 border border-slate-200 hover:border-red-200 text-slate-600 text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="flex-grow flex flex-col min-w-0">
+            
+            <!-- TOPBAR -->
+            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6">
+                <div class="flex items-center gap-2 text-xs text-slate-600">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Turno Activo: <strong class="text-slate-800">Matutino</strong></span>
+                </div>
+
+                <div class="flex items-center gap-3 text-right">
+                    <div>
+                        <span id="encargado-name" class="block text-sm font-semibold text-slate-800">Cargando...</span>
+                        <span class="block text-xs text-slate-500">Encargado de Área</span>
+                    </div>
+                    <div id="encargado-avatar" class="w-9 h-9 bg-gradient-to-tr from-brand-600 to-brand-500 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md">
+                        E
+                    </div>
+                </div>
+            </header>
+
+            <!-- ÁREA DE CONTENIDO -->
+            <div class="p-6 sm:p-8 space-y-6 overflow-y-auto">
+                
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800">Control Operativo Diario</h1>
+                        <p class="text-xs text-slate-500 mt-0.5">Seguimiento y ejecución de tareas del turno actual</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>Reportar Falla</span>
+                        </button>
+                        <button type="button" onclick="abrirModalRegistro()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-lg shadow-brand-600/20 transition-all">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Nuevo Registro</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TARJETAS DE MÉTRICAS -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Tareas Completadas</p>
+                            <h3 id="tareas-completadas" class="text-xl font-bold text-slate-800 mt-0.5">0 / 0</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-4">
+                        <div class="w-10 h-10 bg-amber-500/10 text-amber-400 rounded-lg flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-boxes-packing"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Alertas de Stock Bajo</p>
+                            <h3 class="text-xl font-bold text-slate-800 mt-0.5">3 Ítems</h3>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-4">
+                        <div class="w-10 h-10 bg-brand-50 text-brand-600 rounded-lg flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">Pendientes Prioritarios</p>
+                            <h3 id="tareas-pendientes" class="text-xl font-bold text-slate-800 mt-0.5">0 Registros</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLA OPERATIVA DE TAREAS -->
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+                    <div class="p-4 border-b border-slate-200 flex justify-between items-center">
+                        <h2 class="text-sm font-semibold text-slate-800">Seguimiento de Tareas del Turno</h2>
+                        <span class="text-xs text-slate-500">Actualizado hace 5 min</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-600">
+                            <thead class="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
+                                <tr>
+                                    <th class="p-3.5">Actividad / Tarea</th>
+                                    <th class="p-3.5">Prioridad</th>
+                                    <th class="p-3.5">Estado</th>
+                                    <th class="p-3.5">Hora Límite</th>
+                                    <th class="p-3.5 text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tareas-table-body" class="divide-y divide-slate-100">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <div id="modal-registro" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6">
+            <h2 class="text-lg font-bold text-slate-800">Nuevo registro de operación</h2>
+            <form id="form-registro" onsubmit="guardarRegistro(event)" class="space-y-4">
+                <div>
+                    <label for="registro-actividad" class="mb-1 block text-xs font-medium text-slate-600">Actividad o tarea</label>
+                    <input id="registro-actividad" type="text" required maxlength="150" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="registro-prioridad" class="mb-1 block text-xs font-medium text-slate-600">Prioridad</label>
+                        <select id="registro-prioridad" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="Alta">Alta</option>
+                            <option value="Media" selected>Media</option>
+                            <option value="Baja">Baja</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="registro-hora" class="mb-1 block text-xs font-medium text-slate-600">Hora límite</label>
+                        <input id="registro-hora" type="time" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="cerrarModalRegistro()" class="rounded-xl bg-slate-100 px-4 py-2 text-xs text-slate-600">Cancelar</button>
+                    <button type="submit" class="rounded-xl bg-brand-600 px-4 py-2 text-xs font-semibold text-white">Guardar registro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script de control y protección de la carpeta js/ -->
+    <script src="../js/encargado.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Diario - Encargado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/modo-oscuro.css">
+    <script src="../js/modo-oscuro.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="h-full text-slate-700 font-sans bg-slate-100">
+
+    <div class="flex min-h-screen">
+        <!-- SIDEBAR -->
+        <aside class="w-64 bg-white border-r border-slate-200 flex flex-col justify-between p-4">
+            <div>
+                <div class="flex items-center gap-3 text-brand-600 font-bold text-lg pb-6 border-b border-slate-200">
+                    <i class="fa-solid fa-clipboard-check text-xl"></i>
+                    <span>Supervisión</span>
+                </div>
+                <nav class="flex flex-col gap-1.5 mt-6">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-brand-700 hover:bg-brand-50 font-medium text-sm rounded-xl transition-all">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Turno & Operaciones</span>
+                    </a>
+                    <a href="inventario.html" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-brand-700 hover:bg-brand-50 font-medium text-sm rounded-xl transition-all">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Inventario / Stock</span>
+                    </a>
+                    <a href="reporte.html" class="flex items-center gap-3 px-3 py-2.5 bg-brand-50 text-brand-600 font-medium text-sm rounded-xl border border-brand-100">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <span>Reporte Diario</span>
+                    </a>
+                </nav>
+            </div>
+            <button onclick="logout()" class="w-full py-2.5 px-3 bg-slate-50 hover:bg-red-50 hover:text-red-600 border border-slate-200 hover:border-red-200 text-slate-600 text-xs font-semibold rounded-xl flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-grow flex flex-col min-w-0">
+            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6">
+                <h1 class="text-lg font-bold text-slate-800">Generar Reporte Diario de Operación</h1>
+                <span id="encargado-name" class="text-xs text-brand-600 font-semibold">Encargado</span>
+            </header>
+
+            <div class="p-6 space-y-6 overflow-y-auto max-w-4xl">
+                <!-- FORMULARIO DE REPORTE -->
+                <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
+                    <h2 class="text-sm font-semibold text-slate-800 border-b border-slate-200 pb-3">Bitácora de Cierre de Turno</h2>
+                    
+                    <form id="form-reporte" onsubmit="enviarReporte(event)" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-600 mb-1">Turno</label>
+                                <select id="rep-turno" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                    <option value="Matutino">Matutino</option>
+                                    <option value="Vespertino">Vespertino</option>
+                                    <option value="Nocturno">Nocturno</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-600 mb-1">Estatus del Almacén</label>
+                                <select id="rep-estatus" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                    <option value="Sin novedades">Sin novedades (Normal)</option>
+                                    <option value="Incidencias menores">Incidencias menores</option>
+                                    <option value="Alerta de Stock">Alerta de Stock bajo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Resumen de Actividades Realizadas</label>
+                            <textarea id="rep-actividades" rows="3" required placeholder="Ej. Se recibió embarque de cable UTP, se acomodó pasillo 2..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Observaciones o Incidencias Detectadas</label>
+                            <textarea id="rep-incidencias" rows="2" placeholder="Ej. Empaque dañado en caja #4..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-lg shadow-brand-600/20 transition-all">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Guardar Reporte Diario</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- HISTORIAL DE REPORTES ENVIADOS -->
+                <div class="bg-white border border-slate-200 rounded-xl p-6">
+                    <h2 class="text-sm font-semibold text-slate-800 mb-4">Reportes de Turnos Anteriores</h2>
+                    <div id="historial-reportes" class="space-y-3">
+                        <!-- Carga dinámica -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/encargado-reporte.js"></script>
+</body>
+</html>
